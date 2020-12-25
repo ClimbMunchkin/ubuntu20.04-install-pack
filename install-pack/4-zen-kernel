@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "УСТАНОВКА ZEN-ЯДРА НА UBUNTU 20.04"
+sudo add-apt-repository ppa:damentz/liquorix && sudo apt-get update
+sudo apt-get install linux-headers-liquorix-amd64 linux-image-liquorix-amd64

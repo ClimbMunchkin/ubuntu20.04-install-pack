@@ -1,0 +1,4 @@
+#!/bin/sh
+#Включаем активный угол меню Обзор
+echo "#ВКЛЮЧАЕМ АКТИВНЫЙ УГОЛ МЕНЮ ОБЗОР..."
+gsettings set org.gnome.desktop.interface enable-hot-corners true

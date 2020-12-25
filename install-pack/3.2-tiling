@@ -1,0 +1,8 @@
+#!/bin/sh
+#Установка Pop Shell Window Tiling 
+echo "#УСТАНОВКА POP SHELL WINDOW TILING..."
+sudo apt-get install -y node-typescript make git
+
+git clone https://github.com/pop-os/shell &&\
+cd shell &&\
+make local-install

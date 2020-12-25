@@ -1,0 +1,6 @@
+#!/bin/sh
+#QT-приложения не будут отличаться от системной темы
+echo "#QT-ПРИЛОЖЕНИЯ НЕ БУДУТ ОТЛИЧАТЬСЯ ОТ СИСТЕМНОЙ ТЕМЫ"
+sudo apt install -y qt5-style-plugins
+
+echo "export QT_QPA_PLATFORMTHEME=gtk2" >> ~/.profile

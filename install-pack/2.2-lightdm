@@ -1,0 +1,7 @@
+#!/bin/sh
+#Настройка окна входа в систему
+echo "#НАСТРОЙКА ОКНА ВХОДА В СИСТЕМУ..."
+sudo ap-get install lightdm lightdm-settings slick-greeter -y
+
+#Задаем экран приветствия:
+#sudo sh -c "echo 'greeter-session=slick-greeter' >> /etc/lightdm/lightdm.conf"

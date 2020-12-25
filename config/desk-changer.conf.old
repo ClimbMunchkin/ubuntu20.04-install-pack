@@ -1,0 +1,8 @@
+[/]
+current-profile='my'
+notifications=false
+profile-state={'default': ('file:///usr/share/backgrounds/contest/focal.xml', 'file:///usr/share/backgrounds/warty-final-ubuntu.png'), 'mac': ('file:///home/jazzzman/ubuntu20.04-install-pack/themes/MacBuntu-Wallpapers/mbuntu-4.jpg', 'file:///home/jazzzman/ubuntu20.04-install-pack/themes/MacBuntu-Wallpapers/mbuntu-4.jpg'), 'wallpaper': ('file:///home/jazzzman/ubuntu20.04-install-pack/themes/wallpapers/thumb-1920-573870.jpg', 'file:///home/jazzzman/ubuntu20.04-install-pack/themes/wallpapers/wp6897018-dune-movie-wallpapers.jpg')}
+profiles={'default': [('file:///usr/share/backgrounds', true)], 'my': [('file:///home/jazzzman/ubuntu20.04-install-pack/themes/Diesel', false)], 'mac': [('file:///home/jazzzman/ubuntu20.04-install-pack/themes/MacBuntu-Wallpapers', true)], 'wallpaper': [('file:///home/jazzzman/ubuntu20.04-install-pack/themes/wallpapers', false)]}
+random=false
+remember-profile-state=true
+rotation='hourly'

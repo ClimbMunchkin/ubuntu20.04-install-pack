@@ -1,0 +1,8 @@
+#!/bin/sh
+#Установка flash-плейера
+echo "#УСТАНОВКА FLASH-ПЛЕЙЕРА"
+sudo apt-get install -y pepperflashplugin-nonfree
+#Чтобы  избежать ошибки после установки флэш плеера с libdvd-pkg: `apt-get check` failed, you may have broken packages. Aborting… 
+#Переустанавливаем эту библиотеку
+sudo apt-get autoremove libdvd-pkg -y && sudo apt-get install libdvd-pkg -y && sudo dpkg-reconfigure libdvd-pkg
+

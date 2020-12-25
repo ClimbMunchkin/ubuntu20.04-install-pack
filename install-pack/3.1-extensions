@@ -1,0 +1,32 @@
+#!/bin/sh
+#Устанавливаем файлы расширения
+echo "#УСТАНАВЛИВАЕМ ФАЙЛЫ РАСШИРЕНИЯ..."
+#Установка pomodoro
+sudo apt-get install -y gnome-shell-pomodoro
+
+#Установка  расширений arcmenu, dash-to-panel, extensions,openweather-extension, user-theme
+cp -r ../extensions ~/.local/share/gnome-shell
+
+
+#включаем расширения
+gnome-extensions enable arcmenu@arcmenu.com
+gnome-extensions enable dash-to-panel@jderose9.github.com
+gnome-extensions enable pop-shell@system76.com
+gnome-extensions enable extensions@abteil.org
+gnome-extensions enable arcmenu@arcmenu.com
+gnome-extensions enable openweather-extension@jenslody.de
+gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
+gnome-extensions enable desk-changer@eric.gach.gmail.com
+
+
+#Загружаем настройки для расширений
+
+cat ../config/arcmenu.conf | dconf load /org/gnome/shell/extensions/arcmenu/ 
+cat ../config/dash-to-panel.conf | dconf load /org/gnome/shell/extensions/dash-to-panel/ 
+cat ../config/dash-to-dock.conf | dconf load /org/gnome/shell/extensions/dash-to-dock/ 
+#Перезапускаем сеанс
+#sudo service lightdm restart
+#или так sudo service gdm3 restart
+
+
+

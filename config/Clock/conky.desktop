@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/conky -c /home/%USER%/.conky/Clock/Clock.conky
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[ru_RU]=Часы и мониторинг системы
+Name=Часы и мониторинг системы
+Comment[ru_RU]=Часы и мониторинг системы на рабочий стол
+Comment=Часы и мониторинг системы на рабочий стол

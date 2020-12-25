@@ -1,0 +1,6 @@
+[Unit]
+Description=Lower default brightness
+[Service]
+ExecStart=/bin/sh -c "sleep 4 && echo 25 > /sys/class/backlight/nvidia_0/brightness"
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,4 @@
+#!/bin/sh
+#Поддержка i386 архитектуры
+echo "#ПОДДЕРЖКА I386 АРХИТЕКТУРЫ"
+sudo dpkg --add-architecture i386

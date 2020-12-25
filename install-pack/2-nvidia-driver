@@ -1,0 +1,12 @@
+#!/bin/sh
+#Установкa самых новых видео-драйверов
+echo "#УСТАНОВКA САМЫХ НОВЫХ ВИДЕО-ДРАЙВЕРОВ..."
+#Смотрим какие дрова есть: 
+ubuntu-drivers devices 
+#Для установки самых новых видео-драйверов:
+sudo ubuntu-drivers autoinstall 
+
+sudo sh -c "cat ../config/brightness/10-nvidia.conf >> /usr/share/X11/xorg.conf.d/10-nvidia.conf"
+
+sudo sed -e '/GRUB_CMDLINE_LINUX_DEFAULT/c GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash nvidia.NVreg_EnableBacklightHandler=1\"  '/etc/default/grub
+sudo update-grub

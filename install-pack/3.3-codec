@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "УСТАНОВКА КОДЕКОВ ДЛЯ ВОСПРОИЗВЕДЕНИЯ МУЛЬТИМЕДИА"
+#УСТАНОВКА КОДЕКОВ ДЛЯ ВОСПРОИЗВЕДЕНИЯ МУЛЬТИМЕДИА
+sudo apt-get install -y ubuntu-restricted-extras libavcodec-extra libdvd-pkg 
