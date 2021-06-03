@@ -42,7 +42,7 @@ clear
 echo "ЧИСЛО УСТАНАВЛИВАЕМЫХ КОМПОНЕНТ: $count \n"
 delta=$((100/$count + 1))
 
-(
+#(
 procent=0 #Процент выполнения
 for prog in $progs; do
 	echo "Установка $prog ..."
@@ -53,17 +53,17 @@ for prog in $progs; do
  	sleep 1s
  	procent=$(( $procent + $delta ))
 done
-)|
-zenity --progress \
-       --title="Конфигурирование. Устанавливаем $count компонент." \
-       --text="Инициализация..." \
-       --percentage=0 --width=600 --height=100\
-       --auto-close --auto-kill 
-
-if [ "$?" = -1 ]
-then
-  zenity --error --text="Изменение конфигурации отменено"
-fi
+#)|
+#zenity --progress \
+#       --title="Конфигурирование. Устанавливаем $count компонент." \
+#       --text="Инициализация..." \
+#       --percentage=0 --width=600 --height=100\
+#       --auto-close --auto-kill 
+#
+#if [ "$?" = -1 ]
+#then
+#  zenity --error --text="Изменение конфигурации отменено"
+#fi
 
 #Перезагружаемся в конце установки
 echo "================================================================================================"
