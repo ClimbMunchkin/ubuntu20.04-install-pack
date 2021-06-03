@@ -8,4 +8,4 @@ sudo apt install git && cd ~ &&
 git clone https://github.com/ClimbMunchkin/ubuntu20.04-install-pack.git ubuntu20.04-install-pack &&
 sh ~/ubuntu20.04-install-pack/ubuntu20.04-install-pack.sh
 
-Выберите необходимые вам пункты для установки и  перезагрузите компьютер.
+Выберите необходимые вам пункты для установки. После установки перезагрузите компьютер.
