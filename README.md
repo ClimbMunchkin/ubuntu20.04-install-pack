@@ -1,4 +1,28 @@
 ubuntu20.04-install-pack
+Делаем GNU/Linux UBUNTU более удобным!
+
+В данный install-pack входят следующие настройки:
+Обновление системы до последней актуальной версии
+Переход на новую LTS версию системы
+Установка стабильной версии Chrome
+Установка драйвера видеокарты nvidia GeForce GTX 1650
+Выключение компьютера с кнопки
+Установка lightdm и настройка окна входа в систему
+Переключение раскладки клавиатуры Ctrl+Shift
+Поддержка i386 архитектуры
+Включаем активный угол меню Обзор
+Добавляем Шаблоны
+Обязательные программы (gdebi synaptic mc nemo menulibre dconf-editor net-tools tilix catfish gnome-tweak-tool chrome-gnome-shell grub-customizer timeshift qbittorrent vlc)
+Ставим расширения рабочего стола (Extensions, Dash to Panel, ArcMenu, Ubuntu AppIndicators, Desktop icons, Pomodoro, OpenWeather, User themes)
+Установка расширения Pop Shell Window Tiling
+Установка кодеков для воспроизведения мультимедиа
+Установка flash -плейера
+QT приложения не будут отличаться от системной темы
+Ставим красивые часы и системный монитор на рабочий стол
+Установка клиента P2P aMule
+Установка офисных программ
+Установка Zen-ядра на Ubuntu 20.04
+Решение проблемы запоминания яркости Ubuntu
 
 Установка:
 
