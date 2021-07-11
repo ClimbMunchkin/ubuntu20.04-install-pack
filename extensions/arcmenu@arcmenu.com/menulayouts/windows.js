@@ -134,7 +134,7 @@ var createMenu = class extends BaseMenuLayout.BaseLayout{
             x_align: Clutter.ActorAlign.START,
             y_align: Clutter.ActorAlign.START,
             overlay_scrollbars: true,
-            style_class: 'vfade'
+            style_class: 'small-vfade'
         });   
         this.applicationsScrollBox.style = "width:300px;";   
 
@@ -340,7 +340,7 @@ var createMenu = class extends BaseMenuLayout.BaseLayout{
 
         let themeContext = St.ThemeContext.get_for_stage(global.stage);
         let scaleFactor = themeContext.scale_factor;
-        let height =  Math.round(this._settings.get_int('menu-height') / scaleFactor);
+        let height = Math.round(this._settings.get_int('menu-height') / scaleFactor) - 1;
         this.leftPanelPopup.style = `height: ${height}px`;        
         this.section.actor.add_actor(this.leftPanelPopup); 
         this.displayFavorites();
@@ -394,14 +394,14 @@ var createMenu = class extends BaseMenuLayout.BaseLayout{
 
         this.arcMenu.actor.get_allocation_box();
         let [x, y] = this.arcMenu.actor.get_transformed_position();
-        if(this.arcMenu._arrowSide == St.Side.TOP)
+        if(this.arcMenu._arrowSide === St.Side.TOP)
             y += rise + 1;
         else 
             y += 1;
-        if(this.arcMenu._arrowSide == St.Side.LEFT)
-            x= x+(borderRadius * 2) + rise + 1;
+        if(this.arcMenu._arrowSide === St.Side.LEFT)
+            x = x + (borderRadius * 2) + rise + 1;
         else
-            x = x+(borderRadius * 2);
+            x = x + (borderRadius * 2);
         this.dummyCursor.set_position(Math.round(x+borderWidth), Math.round(y+borderWidth));
         this.favoritesMenu.toggle();
     }
