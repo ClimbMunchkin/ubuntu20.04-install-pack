@@ -25,6 +25,8 @@ ubuntu20.04-install-pack
 
 Добавляем Шаблоны
 
+Устанавливаем Шрифты 
+
 Обязательные программы (gdebi synaptic mc nemo menulibre dconf-editor net-tools tilix catfish gnome-tweak-tool chrome-gnome-shell grub-customizer timeshift qbittorrent vlc)
 
 Ставим расширения рабочего стола (Extensions, Dash to Panel, ArcMenu, Ubuntu AppIndicators, Desktop icons, Pomodoro, OpenWeather, User themes)
