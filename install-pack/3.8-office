@@ -1,3 +1,3 @@
 #!/bin/sh
-echo "УСТАНОВКА ОФИСНЫХ ПРОГРАММ..."
+echo "#УСТАНОВКА ОФИСНЫХ ПРОГРАММ..."
 sudo snap install libreoffice

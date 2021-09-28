@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "УСТАНОВКА КЛИЕНТА P2P AMULE..."
+echo "#УСТАНОВКА КЛИЕНТА P2P AMULE..."
 mkdir -p ~/Downloads/amule
 cd ~/Downloads/amule
 wget http://archive.ubuntu.com/ubuntu/pool/universe/a/amule/amule_2.3.2-6_amd64.deb
