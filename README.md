@@ -27,11 +27,11 @@ ubuntu20.04-install-pack
 
 Устанавливаем Шрифты 
 
-Обязательные программы (gdebi synaptic mc nemo menulibre dconf-editor net-tools tilix catfish gnome-tweak-tool chrome-gnome-shell grub-customizer timeshift qbittorrent vlc)
+Установка тем для GNOME
 
-Ставим расширения рабочего стола (Extensions, Dash to Panel, ArcMenu, Ubuntu AppIndicators, Desktop icons, Pomodoro, OpenWeather, User themes)
+Обязательные программы (gdebi synaptic mc nemo menulibre dconf-editor net-tools tilix catfish gnome-tweak-tool chrome-gnome-shell grub-customizer timeshift qbittorrent vlc pinta)
 
-Установка расширения Pop Shell Window Tiling
+Ставим расширения рабочего стола (Extensions, Dash to Panel, ArcMenu, Ubuntu AppIndicators, Desktop icons, Pomodoro, OpenWeather, User themes, Application view columns, Pop Shell)
 
 Установка кодеков для воспроизведения мультимедиа
 

@@ -1,0 +1,11 @@
+#!/bin/sh
+#Установка тем
+echo "УСТАНАВЛИВАЕМ ТЕМЫ ДЛЯ GNOME..."
+mkdir ~/.themes
+cp ../themes/themes/* ~/.themes
+cd ~/.themes
+for file in *.tar.xz;
+do
+echo "Устанавливаем тему $file";
+tar xf "$file";
+done

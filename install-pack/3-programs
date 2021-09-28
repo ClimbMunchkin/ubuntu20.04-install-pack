@@ -2,4 +2,4 @@
 #Обязательные программы
 echo "УСТАНАВЛИВАЕМ ОБЯЗАТЕЛЬНЫЕ ПРОГРАММЫ..."
 sudo apt-get update && sudo apt-get upgrade -y
-sudo apt-get install -y gdebi synaptic mc nemo menulibre dconf-editor net-tools tilix catfish gnome-tweak-tool chrome-gnome-shell grub-customizer timeshift qbittorrent vlc 
+sudo apt-get install -y gdebi synaptic mc nemo menulibre dconf-editor net-tools tilix catfish gnome-tweak-tool chrome-gnome-shell grub-customizer timeshift qbittorrent vlc pinta

@@ -24,9 +24,10 @@ progs=$(zenity --width=800 --height=500 --list  --text "НАСТРОЙКА UBUNT
 			   TRUE '2.5-hot-corner' 'Включаем активный угол меню Обзор'\
 			   TRUE '2.6-templates' 'Шаблоны'\
 			   TRUE '2.7-fonts' 'Шрифты'\
+			   TRUE '2.8-themes' 'Темы для GNOME'\
 			   TRUE '3-programs' 'Обязательные программы'\
 			   TRUE '3.1-extensions' 'Ставим расширения рабочего стола'\
-			   FALSE '3.2-tiling' 'Установка расширения Pop Shell Window Tiling'\
+			   #FALSE '3.2-tiling' 'Установка расширения Pop Shell Window Tiling'\
 			   FALSE '3.3-codec' 'Установка кодеков для воспроизведения мультимедиа'\
 			   FALSE '3.4-flash' 'Установка flash -плейера'\
 			   TRUE '3.5-qt' 'QT приложения не будут отличаться от системной темы'\
