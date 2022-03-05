@@ -1,4 +1,6 @@
-ubuntu20.04-install-pack
+Making GNU/Linux UBUNTU more usable!
+How convenient it was to get a system ready for work, where there is nothing superfluous and everything is customized for the user. 
+Ubuntu20.04-install-pack is just such a thing for GNU
 
 Делаем GNU/Linux UBUNTU более удобным!
 
