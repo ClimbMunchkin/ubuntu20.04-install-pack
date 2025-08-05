@@ -1,6 +1,6 @@
-Making GNU/Linux UBUNTU more usable!
-How convenient it was to get a system ready for work, where there is nothing superfluous and everything is customized for the user. 
-Ubuntu20.04-install-pack is just such a thing for GNU
+Making Ubuntu more usable for everyone.
+Ubuntu20.04-install-pack provides a clean, streamlined system that's ready for work — with nothing unnecessary and everything tailored to your needs.
+It’s the perfect setup tool for GNU/Linux users who want efficiency and simplicity.
 
 Делаем GNU/Linux UBUNTU более удобным!
 
