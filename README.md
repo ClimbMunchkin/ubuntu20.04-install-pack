@@ -5,7 +5,7 @@ It’s the perfect setup tool for GNU/Linux users who want efficiency and simpli
 Делаем GNU/Linux UBUNTU более удобным!
 
 В данный install-pack входят следующие настройки:
-------------------------------------------------
+-------------------------------------------------
 
 Обновление системы до последней актуальной версии
 
@@ -52,7 +52,18 @@ QT приложения не будут отличаться от системн
 Решение проблемы запоминания яркости Ubuntu
 
 Установка:
----------
+----------
+
+
+Для Ubuntu 22.04 LTS и 24.04 LTS если используется Wayland, сначала переключитесь на X11:
+
+1. Выйдите из сеанса.
+2. На экране входа выберите пользователя и нажмите значок шестерёнки.
+3. Выберите Ubuntu on Xorg и войдите в систему.
+
+
+Для Ubuntu 26.04 LTS штатное использование X11 не предусмотрено, поэтому после установки 
+необходимо активировать расширения вручную, см. Примечание.      
 
 Скопируйте установочный скрипт в буфер и запустите его  в командной строке
 
@@ -63,3 +74,17 @@ bash ~/ubuntu-install-pack/ubuntu-install-pack.sh
 ```
 
 Выберите необходимые вам пункты для установки. После установки перезагрузите компьютер.
+
+
+Примечание:
+--------
+Если расширения все-таки не включились, сделайте это вручную после перезагрузки:
+```
+gnome-extensions enable arcmenu@arcmenu.com
+gnome-extensions enable dash-to-panel@jderose9.github.com
+gnome-extensions enable tilingshell@ferrarodomenico.com
+gnome-extensions enable openweather-extension@jenslody.de
+gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
+gnome-extensions enable desk-changer@eric.gach.gmail.com
+```
+

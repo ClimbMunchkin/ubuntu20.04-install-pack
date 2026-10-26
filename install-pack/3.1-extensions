@@ -7,6 +7,18 @@ sudo apt install -y gnome-shell-pomodoro
 #Установка  расширений arcmenu, dash-to-panel, extensions,openweather-extension, user-theme
 cp -r ../extensions ~/.local/share/gnome-shell
 
+#
+# требует перезапуска сеанса sudo service gdm3 restart перед установкой
+# или активировать вручную 
+
+if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+    echo "Перезапуск GNOME Shell..."
+    killall -HUP gnome-shell
+else
+    echo "Автоматическая активация расширения невозможна."
+    echo "Выйдите из системы и войдите снова, чтобы активировать расширения GNOME."
+	read -r -p "Нажмите Enter для продолжения..."
+fi
 
 #включаем расширения
 gnome-extensions enable arcmenu@arcmenu.com
@@ -21,12 +33,9 @@ gnome-extensions enable desk-changer@eric.gach.gmail.com
 
 cat ../config/arcmenu.conf | dconf load /org/gnome/shell/extensions/arcmenu/ 
 cat ../config/dash-to-panel.conf | dconf load /org/gnome/shell/extensions/dash-to-panel/ 
-cat desk-changer.conf.old | dconf load /org/gnome/shell/extensions/desk-changer/
+cat ../config/desk-changer.conf| dconf load /org/gnome/shell/extensions/desk-changer/
 
 
-#Перезапускаем сеанс
-#sudo service lightdm restart
-#или так sudo service gdm3 restart
 
 
 
