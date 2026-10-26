@@ -31,7 +31,7 @@ It’s the perfect setup tool for GNU/Linux users who want efficiency and simpli
 
 Установка тем для GNOME
 
-Обязательные программы (gdebi synaptic mc nemo menulibre dconf-editor net-tools tilix catfish gnome-tweak-tool chrome-gnome-shell grub-customizer timeshift qbittorrent vlc pinta)
+Обязательные программы (gdebi synaptic mc nemo menulibre dconf-editor net-tools tilix catfish gnome-tweaks chrome-gnome-shell grub-customizer timeshift qbittorrent vlc pinta)
 
 Ставим расширения рабочего стола (Extensions, Dash to Panel, ArcMenu, Ubuntu AppIndicators, Desktop icons, Pomodoro, OpenWeather, User themes, Application view columns, Pop Shell)
 
@@ -55,9 +55,9 @@ QT приложения не будут отличаться от системн
 ---------
 
 Скопируйте установочный скрипт в буфер и запустите его  в командной строке
- 
-```
-sudo apt install git && cd ~ &&
+
+``` 
+sudo apt update && sudo apt install git && cd ~ &&
 git clone https://github.com/ClimbMunchkin/ubuntu20.04-install-pack.git ubuntu20.04-install-pack &&
 sh ~/ubuntu20.04-install-pack/ubuntu20.04-install-pack.sh
 ```

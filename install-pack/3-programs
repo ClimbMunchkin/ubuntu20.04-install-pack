@@ -1,5 +1,7 @@
 #!/bin/sh
 #Обязательные программы
 echo "#УСТАНАВЛИВАЕМ ОБЯЗАТЕЛЬНЫЕ ПРОГРАММЫ..."
-sudo apt-get update && sudo apt-get upgrade -y
-sudo apt-get install -y gdebi synaptic mc nemo menulibre dconf-editor net-tools tilix catfish gnome-tweak-tool chrome-gnome-shell grub-customizer timeshift qbittorrent vlc pinta
+sudo add-apt-repository ppa:danielrichter2007/grub-customizer
+sudo apt update
+sudo apt install -y gdebi synaptic mc nemo menulibre dconf-editor net-tools tilix \
+catfish gnome-tweaks chrome-gnome-shell grub-customizer timeshift qbittorrent vlc pinta
