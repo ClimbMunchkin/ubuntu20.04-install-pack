@@ -7,18 +7,18 @@ function n_char(){
 }
 
 
-cd ~/ubuntu20.04-install-pack
+cd ~/ubuntu-install-pack
 password=$(zenity --forms \
-	--title="НАСТРОЙКА UBUNTU 20.04" \
+	--title="НАСТРОЙКА UBUNTU" \
   	--text="Введите пароль Администратора" \
     --add-password="Пароль"\
     --width=320)
 echo $password | sudo -S chown -R $USER:$USER .
 #sudo chown -R $USER:$USER .
 #Даем права на запуск скриптов в каталоге install-pack/
-sudo chmod +x install-pack.0/*
+sudo chmod +x install-pack/*
 #read -sn1 -p "Press any key to continue...";echo
-progs=$(zenity --width=800 --height=500 --list  --text "НАСТРОЙКА UBUNTU 20.04" --checklist --separator=" " \
+progs=$(zenity --width=800 --height=500 --list  --text "НАСТРОЙКА UBUNTU" --checklist --separator=" " \
 			  --column "Выбрать" --column "Компоненты" --column "Описание" \
 			   TRUE '0-upgrade' 'Обновление системы до последней актуальной версии'\
 			   FALSE '1-full-upgrade' 'Переход на новую LTS версию системы'\
