@@ -1,150 +1,210 @@
-/*
- * ArcMenu - A traditional application menu for GNOME 3
- *
- * ArcMenu Lead Developer and Maintainer
- * Andrew Zaech https://gitlab.com/AndrewZaech
- * 
- * ArcMenu Founder, Former Maintainer, and Former Graphic Designer
- * LinxGem33 https://gitlab.com/LinxGem33 - (No Longer Active)
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
+/* eslint-disable jsdoc/require-jsdoc */
+/* exported getMenuLayoutEnum, Menu */
 const Me = imports.misc.extensionUtils.getCurrentExtension();
 
-const {Clutter, Gtk, St} = imports.gi;
-const BaseMenuLayout = Me.imports.menulayouts.baseMenuLayout;
+const {Clutter, GObject, Shell, St} = imports.gi;
+const {BaseMenuLayout} = Me.imports.menulayouts.baseMenuLayout;
 const Constants = Me.imports.constants;
 const Gettext = imports.gettext.domain(Me.metadata['gettext-domain']);
 const Main = imports.ui.main;
 const MW = Me.imports.menuWidgets;
-const Utils =  Me.imports.utils;
 const _ = Gettext.gettext;
 
-const RUNNER_WIDTH = 500;
+const padding = 10;
 
-var createMenu =  class extends BaseMenuLayout.BaseLayout{
-    constructor(mainButton) {
-        super(mainButton,{
-            Search: true,
-            SearchType: Constants.SearchType.LIST_VIEW,
-            VerticalMainBox: true
-        });
+function getMenuLayoutEnum() {
+    return Constants.MenuLayout.RUNNER;
+}
+
+var Menu = class ArcMenuRunnerLayout extends BaseMenuLayout {
+    static {
+        GObject.registerClass(this);
     }
 
-    createLayout(){
-        this.mainBox.style = `max-height: 400px;`;       
+    constructor(menuButton, isStandalone) {
+        let displayType, searchDisplayType, columnSpacing, rowSpacing, defaultMenuWidth, iconGridSize;
+        const searchDisplayStyle = Me.settings.get_enum('runner-search-display-style');
 
-        this.dummyCursor = new St.Widget({ width: 0, height: 0, opacity: 0 });
-        Main.uiGroup.add_actor(this.dummyCursor);
+        if (searchDisplayStyle === Constants.DisplayType.LIST) {
+            displayType = Constants.DisplayType.LIST;
+            searchDisplayType = Constants.DisplayType.LIST;
+            columnSpacing = 0;
+            rowSpacing = 0;
+            defaultMenuWidth = null;
+            iconGridSize = null;
+        } else {
+            displayType = Constants.DisplayType.GRID;
+            searchDisplayType = Constants.DisplayType.GRID;
+            columnSpacing = 15;
+            rowSpacing = 15;
+            defaultMenuWidth = Me.settings.get_int('runner-menu-width');
+            iconGridSize = Constants.GridIconSize.LARGE;
+        }
+
+        super(menuButton, {
+            has_search: true,
+            display_type: displayType,
+            search_display_type: searchDisplayType,
+            column_spacing: columnSpacing,
+            row_spacing: rowSpacing,
+            vertical: true,
+            default_menu_width: defaultMenuWidth,
+            icon_grid_size: iconGridSize,
+            category_icon_size: Constants.MEDIUM_ICON_SIZE,
+            apps_icon_size: Constants.EXTRA_SMALL_ICON_SIZE,
+            quicklinks_icon_size: Constants.EXTRA_SMALL_ICON_SIZE,
+            buttons_icon_size: Constants.EXTRA_SMALL_ICON_SIZE,
+            pinned_apps_icon_size: Constants.EXTRA_SMALL_ICON_SIZE,
+            is_standalone_runner: !!isStandalone,
+        });
+
+        this.activeMenuItem = null;
+
         this.updateLocation();
 
-        //store old ArcMenu variables
+        // store old ArcMenu variables
         this.oldSourceActor = this.arcMenu.sourceActor;
         this.oldFocusActor = this.arcMenu.focusActor;
         this.oldArrowAlignment = this.arcMenu.actor._arrowAlignment;
 
-        this.arcMenu.actor.style = "-arrow-base:0px;-arrow-rise:0px;";
-        this.arcMenu.sourceActor = this.dummyCursor;
-        this.arcMenu.focusActor = this.dummyCursor;
-        this.arcMenu._boxPointer.setPosition(this.dummyCursor, 0.5);
-        this.arcMenu.close();
-        this.arcMenu._boxPointer.hide();
+        this.arcMenu.sourceActor = Main.layoutManager.dummyCursor;
+        this.arcMenu.focusActor = Main.layoutManager.dummyCursor;
+        this.arcMenu._boxPointer.setPosition(Main.layoutManager.dummyCursor, 0.5);
 
         this.topBox = new St.BoxLayout({
             x_expand: true,
             y_expand: true,
-            vertical: false
+            vertical: false,
+            style: `margin: ${padding}px ${padding}px 0px 0px; spacing: ${padding}px;`,
         });
-        this.topBox.style = "width: " + RUNNER_WIDTH + "px; padding-bottom: 0.5em";
+        this.runnerTweaksButton = new MW.RunnerTweaksButton(this);
+        this.runnerTweaksButton.set({
+            x_expand: false,
+            y_expand: true,
+            y_align: this.searchBox.y_align = Clutter.ActorAlign.CENTER,
+            x_align: Clutter.ActorAlign.CENTER,
+        });
 
-        this.searchBox = new MW.SearchBox(this);
-        this.searchBox.actor.style = "padding-top: 0.5em; padding-bottom: 0.5em;padding-left: 1em;padding-right: 1em;";
-        this._searchBoxChangedId = this.searchBox.connect('changed', this._onSearchBoxChanged.bind(this));
-        this._searchBoxKeyPressId = this.searchBox.connect('key-press-event', this._onSearchBoxKeyPress.bind(this));
-        this._searchBoxKeyFocusInId = this.searchBox.connect('key-focus-in', this._onSearchBoxKeyFocusIn.bind(this));
-        this.topBox.add(this.searchBox.actor);
-        this.mainBox.add(this.topBox);
-
-        this.arcMenuSettingsButton = new MW.ArcMenuSettingsButton(this);
-        this.arcMenuSettingsButton.actor.x_expand = false;
-        this.arcMenuSettingsButton.actor.y_expand = false;
-        this.arcMenuSettingsButton.actor.y_align = Clutter.ActorAlign.CENTER;
-        this.arcMenuSettingsButton.actor.x_align = Clutter.ActorAlign.CENTER;
-        this.arcMenuSettingsButton.actor.style = "margin-right: 1em; padding: 8px;";
-        this.topBox.add(this.arcMenuSettingsButton.actor);
+        this.topBox.add_child(this.searchBox);
+        this.topBox.add_child(this.runnerTweaksButton);
+        this.add_child(this.topBox);
 
         this.applicationsScrollBox = this._createScrollBox({
             x_expand: true,
-            y_expand: true,
+            y_expand: false,
             y_align: Clutter.ActorAlign.START,
-            x_align: Clutter.ActorAlign.START,
-            overlay_scrollbars: true,
-            style_class: 'apps-menu small-vfade',
-            reactive:true
-        });      
-        this.applicationsScrollBox.style = "width: " + RUNNER_WIDTH + "px";
+            x_align: Clutter.ActorAlign.FILL,
+            style_class: this._disableFadeEffect ? '' : 'small-vfade',
+            style: `padding: ${padding}px 0px 0px 0px;`,
+        });
 
-        this.mainBox.add(this.applicationsScrollBox);
-        this.applicationsBox = new St.BoxLayout({ vertical: true });
+        this.add_child(this.applicationsScrollBox);
+        this.applicationsBox = new St.BoxLayout({
+            vertical: true,
+            style: `padding: 0px ${padding}px 0px 0px;`,
+        });
         this.applicationsScrollBox.add_actor(this.applicationsBox);
+
+        this.setDefaultMenuView();
+        this.updateWidth();
     }
-    
-    updateLocation(){
-        this.arcMenu.actor.style = "-arrow-base:0px;-arrow-rise:0px;";
+
+    updateWidth(setDefaultMenuView) {
+        const width = Me.settings.get_int('runner-menu-width') - padding;
+        this.menu_width = width;
+        if (setDefaultMenuView)
+            this.setDefaultMenuView();
+    }
+
+    setDefaultMenuView() {
+        this.activeMenuItem = null;
+        super.setDefaultMenuView();
+        if (Me.settings.get_boolean('runner-show-frequent-apps'))
+            this.displayFrequentApps();
+    }
+
+    displayFrequentApps() {
+        const mostUsed = Shell.AppUsage.get_default().get_most_used();
+        if (mostUsed.length < 1)
+            return;
+
+        const labelRow = this.createLabelRow(_('Frequent Apps'));
+        this.applicationsBox.add_child(labelRow);
+
+        const frequentAppsList = [];
+        for (let i = 0; i < mostUsed.length; i++) {
+            if (mostUsed[i] && mostUsed[i].get_app_info().should_show()) {
+                const item = new MW.ApplicationMenuItem(this, mostUsed[i], Constants.DisplayType.LIST);
+                frequentAppsList.push(item);
+            }
+        }
+        let activeMenuItemSet = false;
+        const maxApps = Math.min(10, frequentAppsList.length);
+        for (let i = 0; i < maxApps; i++) {
+            const item = frequentAppsList[i];
+            if (item.get_parent())
+                item.get_parent().remove_child(item);
+            this.applicationsBox.add_actor(item);
+            if (!activeMenuItemSet) {
+                activeMenuItemSet = true;
+                this.activeMenuItem = item;
+            }
+        }
+    }
+
+    /**
+     * if button is hidden, menu should appear on current monitor,
+     * unless preference is to always show on primary monitor
+     *
+     * @returns index of monitor where menu should appear
+     */
+    _getMonitorIndexForPlacement() {
+        if (this.is_standalone_runner) {
+            return Me.settings.get_boolean('runner-hotkey-open-primary-monitor')
+                ? Main.layoutManager.primaryMonitor.index : Main.layoutManager.currentMonitor.index;
+        } else if (Me.settings.get_enum('menu-button-appearance') === Constants.MenuButtonAppearance.NONE) {
+            return Me.settings.get_boolean('hotkey-open-primary-monitor')
+                ? Main.layoutManager.primaryMonitor.index : Main.layoutManager.currentMonitor.index;
+        } else {
+            return Main.layoutManager.findIndexForActor(this.menuButton);
+        }
+    }
+
+    updateLocation() {
         this.arcMenu._boxPointer.setSourceAlignment(0.5);
-        this.arcMenu._arrowAlignment = 0.5
-        
-        let monitorIndex = Main.layoutManager.findIndexForActor(this.menuButton.menuButtonWidget.actor);
-        let rect = Main.layoutManager.getWorkAreaForMonitor(monitorIndex);
+        this.arcMenu._arrowAlignment = 0.5;
 
-        //Position the runner menu in the center of the current monitor, at top of screen.
-        let positionX = Math.round(rect.x + (rect.width / 2));
+        const runnerHeight = Me.settings.get_int('runner-menu-height');
+        const runnerWidth = Me.settings.get_int('runner-menu-width');
+        const runnerFontSize = Me.settings.get_int('runner-font-size');
+
+        const rect = Main.layoutManager.getWorkAreaForMonitor(this._getMonitorIndexForPlacement());
+
+        // Position the runner menu in the center of the current monitor, at top of screen.
+        const positionX = Math.round(rect.x + (rect.width / 2));
         let positionY = rect.y;
-        if(this._settings.get_enum('runner-position') == 1)
-            positionY = Math.round(rect.y + (rect.height / 2) - 125);
-        this.dummyCursor.set_position(positionX,  positionY);
+        if (Me.settings.get_enum('runner-position') === 1)
+            positionY = Math.round(rect.y + (rect.height / 2) - (runnerHeight / 2));
+        Main.layoutManager.setDummyCursorGeometry(positionX, positionY, 0, 0);
 
-    }
-    
-    updateIcons(){
-        this.newSearch._reset();
-    }
+        if (!this.topBox)
+            return;
 
-    updateStyle(){
-        super.updateStyle();
-        let addStyle=this._settings.get_boolean('enable-custom-arc-menu');
-        addStyle ? this.arcMenuSettingsButton.actor.add_style_class_name('arc-menu-action') : this.arcMenuSettingsButton.actor.remove_style_class_name('arc-menu-action');
-        this.arcMenu.actor.style = "-arrow-base:0px;-arrow-rise:0px;";
+        this.style = `max-height: ${runnerHeight}px; margin: 0px 0px 0px ${padding}px; width: ${runnerWidth}px;`;
+        if (runnerFontSize > 0) {
+            this.style += `font-size: ${runnerFontSize}pt;`;
+            this.searchBox.style += `font-size: ${runnerFontSize}pt;`;
+        }
+        this.updateWidth();
     }
 
-    updateSearch(){
-        this.newSearch._reloadRemoteProviders();
+    loadCategories() {
     }
 
-    loadCategories(){
-    }
-
-    destroy(isReload){
-        this.arcMenu.actor.style = null;
+    destroy() {
         this.arcMenu.sourceActor = this.oldSourceActor;
         this.arcMenu.focusActor = this.oldFocusActor;
         this.arcMenu._boxPointer.setPosition(this.oldSourceActor, this.oldArrowAlignment);
-        this.arcMenu.close();
-        this.arcMenu._boxPointer.hide();
-        Main.uiGroup.remove_actor(this.dummyCursor);
-        this.dummyCursor.destroy();
-        super.destroy(isReload);
+        super.destroy();
     }
-}
+};

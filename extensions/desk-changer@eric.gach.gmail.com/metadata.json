@@ -9,9 +9,11 @@
     "3.34",
     "3.32",
     "3.36",
-    "3.38"
+    "3.38",
+    "42",
+    "43"
   ],
   "url": "https://github.com/BigE/desk-changer/",
   "uuid": "desk-changer@eric.gach.gmail.com",
-  "version": 19
+  "version": 25
 }

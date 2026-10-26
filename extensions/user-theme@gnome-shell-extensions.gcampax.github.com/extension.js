@@ -2,28 +2,26 @@
 // Load shell theme from ~/.local/share/themes/name/gnome-shell
 /* exported init */
 
-const { Gio, GLib } = imports.gi;
+const { Gio } = imports.gi;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Main = imports.ui.main;
 
+const Me = ExtensionUtils.getCurrentExtension();
+const Util = Me.imports.util;
+
 const SETTINGS_KEY = 'name';
 
 class ThemeManager {
-    constructor() {
-        this._settings = ExtensionUtils.getSettings();
-    }
-
     enable() {
-        this._changedId = this._settings.connect(`changed::${SETTINGS_KEY}`, this._changeTheme.bind(this));
+        this._settings = ExtensionUtils.getSettings();
+        this._settings.connect(`changed::${SETTINGS_KEY}`, this._changeTheme.bind(this));
         this._changeTheme();
     }
 
     disable() {
-        if (this._changedId) {
-            this._settings.disconnect(this._changedId);
-            this._changedId = 0;
-        }
+        this._settings?.run_dispose();
+        this._settings = null;
 
         Main.setThemeStylesheet(null);
         Main.loadTheme();
@@ -34,13 +32,11 @@ class ThemeManager {
         let themeName = this._settings.get_string(SETTINGS_KEY);
 
         if (themeName) {
-            let stylesheetPaths = [
-                [GLib.get_home_dir(), '.themes'],
-                [GLib.get_user_data_dir(), 'themes'],
-                ...GLib.get_system_data_dirs().map(dir => [dir, 'themes']),
-            ].map(themeDir => GLib.build_filenamev([
-                ...themeDir, themeName, 'gnome-shell', 'gnome-shell.css',
-            ]));
+            const stylesheetPaths = Util.getThemeDirs()
+                .map(dir => `${dir}/${themeName}/gnome-shell/gnome-shell.css`);
+
+            stylesheetPaths.push(...Util.getModeThemeDirs()
+                .map(dir => `${dir}/${themeName}.css`));
 
             stylesheet = stylesheetPaths.find(path => {
                 let file = Gio.file_new_for_path(path);
@@ -57,6 +53,9 @@ class ThemeManager {
     }
 }
 
+/**
+ * @returns {ThemeManager} - the extension state object
+ */
 function init() {
     return new ThemeManager();
 }

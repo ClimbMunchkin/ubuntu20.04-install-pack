@@ -1,78 +1,62 @@
-/*
- * ArcMenu - A traditional application menu for GNOME 3
- *
- * ArcMenu Lead Developer and Maintainer
- * Andrew Zaech https://gitlab.com/AndrewZaech
- * 
- * ArcMenu Founder, Former Maintainer, and Former Graphic Designer
- * LinxGem33 https://gitlab.com/LinxGem33 - (No Longer Active)
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
+/* eslint-disable jsdoc/require-jsdoc */
+/* exported getMenuLayoutEnum, Menu */
 const Me = imports.misc.extensionUtils.getCurrentExtension();
 
-const {Clutter, Gtk, St} = imports.gi;
-const BaseMenuLayout = Me.imports.menulayouts.baseMenuLayout;
+const {Clutter, GObject, St} = imports.gi;
+const {BaseMenuLayout} = Me.imports.menulayouts.baseMenuLayout;
 const Constants = Me.imports.constants;
 const Gettext = imports.gettext.domain(Me.metadata['gettext-domain']);
 const MW = Me.imports.menuWidgets;
-const Utils =  Me.imports.utils;
 const _ = Gettext.gettext;
 
-var createMenu = class extends BaseMenuLayout.BaseLayout{
-    constructor(mainButton) {
-        super(mainButton, {
-            Search: false,
-            SearchType: Constants.SearchType.LIST_VIEW,
-            VerticalMainBox: true
-        });
+function getMenuLayoutEnum() {
+    return Constants.MenuLayout.GNOME_MENU;
+}
+
+var Menu = class ArcMenuGnomeMenuLayout extends BaseMenuLayout {
+    static {
+        GObject.registerClass(this);
     }
-    createLayout(){
-        //Sub Main Box -- stores left and right box
-        this.subMainBox= new St.BoxLayout({
+
+    constructor(menuButton) {
+        super(menuButton, {
+            has_search: false,
+            is_dual_panel: true,
+            display_type: Constants.DisplayType.LIST,
+            search_display_type: Constants.DisplayType.LIST,
+            column_spacing: 0,
+            row_spacing: 0,
+            supports_category_hover_activation: true,
+            vertical: true,
+            category_icon_size: Constants.ICON_HIDDEN,
+            apps_icon_size: Constants.EXTRA_SMALL_ICON_SIZE,
+            quicklinks_icon_size: Constants.SMALL_ICON_SIZE,
+            buttons_icon_size: Constants.EXTRA_SMALL_ICON_SIZE,
+            pinned_apps_icon_size: Constants.MEDIUM_ICON_SIZE,
+        });
+
+        this._mainBox = new St.BoxLayout({
             x_expand: true,
             y_expand: true,
             y_align: Clutter.ActorAlign.FILL,
-            vertical: false
+            vertical: false,
         });
-        this.mainBox.add(this.subMainBox);
+        this.add_child(this._mainBox);
 
         this.rightBox = new St.BoxLayout({
             x_expand: true,
             y_expand: true,
             y_align: Clutter.ActorAlign.START,
             vertical: true,
-            style_class: 'right-box'
         });
 
-        this.applicationsBox = new St.BoxLayout({
-            vertical: true
-        });
+        this.applicationsBox = new St.BoxLayout({vertical: true});
         this.applicationsScrollBox = this._createScrollBox({
             y_align: Clutter.ActorAlign.START,
-            overlay_scrollbars: true,
-            style_class: 'small-vfade'
-        }); 
-
-        let rightPanelWidth = this._settings.get_int('right-panel-width');
-        rightPanelWidth += 45;
-        this.rightBox.style = "width: " + rightPanelWidth + "px;";
-        this.applicationsScrollBox.style = "width: " + rightPanelWidth + "px;";  
-        
+            style_class: this._disableFadeEffect ? '' : 'small-vfade',
+        });
         this.applicationsScrollBox.add_actor(this.applicationsBox);
-        this.rightBox.add(this.applicationsScrollBox);
+        this.rightBox.add_child(this.applicationsScrollBox);
 
         this.leftBox = new St.BoxLayout({
             x_expand: true,
@@ -80,80 +64,75 @@ var createMenu = class extends BaseMenuLayout.BaseLayout{
             x_align: Clutter.ActorAlign.FILL,
             y_align: Clutter.ActorAlign.FILL,
             vertical: true,
-            style_class: 'left-box'
         });
-        
-        let horizonalFlip = this._settings.get_boolean("enable-horizontal-flip");
-        this.subMainBox.add(horizonalFlip ? this.rightBox : this.leftBox);  
-        this.subMainBox.add(this._createVerticalSeparator());
-        this.subMainBox.add(horizonalFlip ? this.leftBox : this.rightBox);
+
+        const verticalSeparator = new MW.ArcMenuSeparator(Constants.SeparatorStyle.MEDIUM,
+            Constants.SeparatorAlignment.VERTICAL);
+        const horizontalFlip = Me.settings.get_boolean('enable-horizontal-flip');
+        this._mainBox.add_child(horizontalFlip ? this.rightBox : this.leftBox);
+        this._mainBox.add_child(verticalSeparator);
+        this._mainBox.add_child(horizontalFlip ? this.leftBox : this.rightBox);
 
         this.categoriesScrollBox = this._createScrollBox({
             x_expand: true,
             y_expand: true,
             y_align: Clutter.ActorAlign.START,
-            style_class: 'apps-menu small-vfade left-scroll-area',
-            overlay_scrollbars: true
+            style_class: this._disableFadeEffect ? '' : 'small-vfade',
         });
-
-        this.leftBox.add(this.categoriesScrollBox);
-        this.categoriesBox = new St.BoxLayout({ vertical: true });
+        this.leftBox.add_child(this.categoriesScrollBox);
+        this.categoriesBox = new St.BoxLayout({vertical: true});
         this.categoriesScrollBox.add_actor(this.categoriesBox);
 
-        this.activitiesBox = new St.BoxLayout({ 
+        this.activitiesBox = new St.BoxLayout({
             vertical: true,
-            x_expand: true, 
+            x_expand: true,
             y_expand: true,
-            y_align: Clutter.ActorAlign.END
+            y_align: Clutter.ActorAlign.END,
         });
-        let activities = new MW.ActivitiesMenuItem(this);
-        this.activitiesBox.add(activities.actor);
-        this.leftBox.add(this.activitiesBox);
+        const activities = new MW.ActivitiesMenuItem(this);
+        this.activitiesBox.add_child(activities);
+        this.leftBox.add_child(this.activitiesBox);
 
-        this.loadFavorites();
+        this.updateWidth();
         this.loadCategories();
-        this.displayCategories();
-        this.setDefaultMenuView(); 
+        this.loadPinnedApps();
+        this.setDefaultMenuView();
     }
 
-    setDefaultMenuView(){
+    updateWidth(setDefaultMenuView) {
+        const leftPanelWidthOffset = 0;
+        const rightPanelWidthOffset = 45;
+        super.updateWidth(setDefaultMenuView, leftPanelWidthOffset, rightPanelWidthOffset);
+    }
+
+    setDefaultMenuView() {
         super.setDefaultMenuView();
-        this.categoryDirectories.values().next().value.displayAppList();
-        this.activeMenuItem = this.categoryDirectories.values().next().value;
+        this.displayCategories();
+
+        const topCategory = this.categoryDirectories.values().next().value;
+        topCategory.displayAppList();
+        this.setActiveCategory(topCategory);
     }
 
-    reload() {
-        super.reload(); 
-        let rightPanelWidth = this._settings.get_int('right-panel-width');
-        rightPanelWidth += 45;
-        this.rightBox.style = "width: " + rightPanelWidth + "px;";
-        this.applicationsScrollBox.style = "width: " + rightPanelWidth + "px;";
-    }
-
-    loadCategories(){
+    loadCategories() {
         this.categoryDirectories = null;
-        this.categoryDirectories = new Map(); 
-        
-        let extraCategories = this._settings.get_value("extra-categories").deep_unpack();
+        this.categoryDirectories = new Map();
 
-        for(let i = 0; i < extraCategories.length; i++){
-            let categoryEnum = extraCategories[i][0];
-            let shouldShow = extraCategories[i][1];
-            if(shouldShow){
-                let categoryMenuItem = new MW.CategoryMenuItem(this, categoryEnum);
+        const extraCategories = Me.settings.get_value('extra-categories').deep_unpack();
+
+        for (let i = 0; i < extraCategories.length; i++) {
+            const categoryEnum = extraCategories[i][0];
+            const shouldShow = extraCategories[i][1];
+            if (shouldShow) {
+                const categoryMenuItem = new MW.CategoryMenuItem(this, categoryEnum, Constants.DisplayType.LIST);
                 this.categoryDirectories.set(categoryEnum, categoryMenuItem);
             }
         }
 
         super.loadCategories();
-
-        for(let categoryMenuItem of this.categoryDirectories.values()){
-            categoryMenuItem.actor.style = "padding-top: 8px; padding-bottom: 8px;";
-            categoryMenuItem.box.remove_actor(categoryMenuItem._icon);
-        }
     }
-    
-    displayCategories(){
+
+    displayCategories() {
         super.displayCategories(this.categoriesBox);
     }
-}
+};

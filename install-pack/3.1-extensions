@@ -11,9 +11,7 @@ cp -r ../extensions ~/.local/share/gnome-shell
 #включаем расширения
 gnome-extensions enable arcmenu@arcmenu.com
 gnome-extensions enable dash-to-panel@jderose9.github.com
-gnome-extensions enable pop-shell@system76.com
-gnome-extensions enable extensions@abteil.org
-gnome-extensions enable arcmenu@arcmenu.com
+gnome-extensions enable tilingshell@ferrarodomenico.com
 gnome-extensions enable openweather-extension@jenslody.de
 gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
 gnome-extensions enable desk-changer@eric.gach.gmail.com
@@ -23,11 +21,12 @@ gnome-extensions enable desk-changer@eric.gach.gmail.com
 
 cat ../config/arcmenu.conf | dconf load /org/gnome/shell/extensions/arcmenu/ 
 cat ../config/dash-to-panel.conf | dconf load /org/gnome/shell/extensions/dash-to-panel/ 
-cat ../config/dash-to-dock.conf | dconf load /org/gnome/shell/extensions/dash-to-dock/ 
+cat desk-changer.conf.old | dconf load /org/gnome/shell/extensions/desk-changer/
+
+
 #Перезапускаем сеанс
 #sudo service lightdm restart
 #или так sudo service gdm3 restart
-cat desk-changer.conf.old | dconf load /org/gnome/shell/extensions/desk-changer/
 
 
 

@@ -1,0 +1,70 @@
+// For GNOME Shell version before 45
+const Me = imports.misc.extensionUtils.getCurrentExtension();
+var Gio = Me.imports.gi.prefs.Gio;
+var GLib = Me.imports.gi.prefs.GLib;
+var Settings = Me.imports.settings.settings.Settings;
+var SettingsOverride = Me.imports.settings.settingsOverride.SettingsOverride;
+var dconfPath = "/org/gnome/shell/extensions/tilingshell/";
+var excludedKeys = [
+Settings.KEY_SETTING_LAYOUTS_JSON,
+Settings.KEY_LAST_VERSION_NAME_INSTALLED,
+Settings.KEY_OVERRIDDEN_SETTINGS];
+
+
+var SettingsExport = class SettingsExport {
+  _gioSettings;
+  constructor(gioSettings) {
+    this._gioSettings = gioSettings;
+  }
+
+  exportToString() {
+    return this._excludeKeys(this._dumpDconf());
+  }
+
+  importFromString(content) {
+    this.restoreToDefault();
+    const proc = Gio.Subprocess.new(
+      ["dconf", "load", dconfPath],
+      Gio.SubprocessFlags.STDIN_PIPE
+    );
+    proc.communicate_utf8(content, null);
+    if (!proc.get_successful()) {
+      this.restoreToDefault();
+      throw new Error(
+        "Failed to import dconf dump file. Restoring to default..."
+      );
+    }
+  }
+
+  restoreToDefault() {
+    Settings.ACTIVE_SCREEN_EDGES = false;
+    Settings.ENABLE_MOVE_KEYBINDINGS = false;
+    SettingsOverride.get().restoreAll();
+    this._gioSettings.list_keys().filter((key) => key.length > 0 && !excludedKeys.includes(key)).forEach((key) => this._gioSettings.reset(key));
+  }
+
+  _dumpDconf() {
+    const proc = Gio.Subprocess.new(
+      ["dconf", "dump", dconfPath],
+      Gio.SubprocessFlags.STDOUT_PIPE
+    );
+    const [, dump] = proc.communicate_utf8(null, null);
+    if (proc.get_successful()) return dump;else
+    throw new Error("Failed to dump dconf");
+  }
+
+  _excludeKeys(dconfDump) {
+    if (dconfDump.length === 0) throw new Error("Empty dconf dump");
+    const keyFile = new GLib.KeyFile();
+    const length = new TextEncoder().encode(dconfDump).length;
+    if (!keyFile.load_from_data(dconfDump, length, GLib.KeyFileFlags.NONE))
+    throw new Error("Failed to load from dconf dump");
+    const [key_list] = keyFile.get_keys("/");
+    key_list.forEach((key) => {
+      if (excludedKeys.includes(key)) keyFile.remove_key("/", key);
+    });
+    const [data] = keyFile.to_data();
+    if (data) return data;else
+    throw new Error("Failed to exclude dconf keys");
+  }
+};

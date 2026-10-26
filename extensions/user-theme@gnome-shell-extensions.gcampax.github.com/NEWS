@@ -1,3 +1,232 @@
+42.beta
+=======
+* workspace-indicator: Fix cancelling editing with Esc [Florian; !208]
+* window-list: Update window tracking to avoid missing icons [Florian; !207]
+* Use libadwaita for preferences [Florian; !209, !213]
+* Adapt to Clutter grab API changes [Florian; !212]
+* Misc. bug fixes and cleanups [Jan, Florian; !210, !214]
+
+Contributors:
+  Jan Beich, Florian Müllner, Naala Nanba
+
+Translators:
+  Boyuan Yang [zh_CN], Matej Urbančič [sl], Naala Nanba [ab],
+  Alexander Shopov [bg], Emin Tufan Çetin [tr]
+
+42.alpha
+========
+* native-window-placement: Fix distorted layout in app grid [Sebastian; !189]
+* window-list: Fix on-screen keyboard [Florian; !199]
+* Misc. bug fixes and cleanups [Neal; Just; !195, !197]
+
+Contributors:
+  Piotr Drąg, Neal Gompa, Sebastian Keller, Florian Müllner, Just Perfection
+
+Translators:
+  Goran Vidović [hr], Sveinn í Felli [is], Yuri Chornoivan [uk],
+  Fabio Tomat [fur], Quentin PAGÈS [oc], Hugo Carvalho [pt],
+  Yaron Shahrabani [he], Jordi Mas i Hernandez [ca], MohammadSaleh Kamyab [fa],
+  Fran Dieguez [gl], Daniel Mustieles [es], Aleksandr Melman [ru],
+  Aurimas Černius [lt], Asier Sarasua Garmendia [eu], Kukuh Syafaat [id],
+  Rafael Fontenelle [pt_BR]
+
+41.0
+====
+* Bump version
+
+41.rc.1
+=======
+* Fix pre-generating stylesheets in tarball [Florian; !190]
+
+Contributors:
+  Florian Müllner
+
+41.rc
+=====
+* window-list: Adapt to overview-on-startup [Florian; !185]
+* apps-menu: Use a custom 'toggle-menu' shortcut [Florian; !173]
+* Misc. bug fixes and cleanups [Florian; !186]
+
+Contributors:
+  Florian Müllner
+
+41.beta
+=======
+* window-list: Extend reactive area of minimap to screen edges [Adam; !171]
+* drive-menu: Improve detection of network mounts [Florian; !27, !176]
+* Use distinct gettext domain for e.g.o uploads [Florian; #335]
+* Misc. bug fixes and cleanups [Florian; !172, !174, !177, !167, !178, !180,
+  !181, !182, !183]
+
+Contributors:
+  Marco Trevisan (Treviño), Adam Goode, Florian Müllner
+
+Translators:
+  Hugo Carvalho [pt], Juliano de Souza Camargo [pt], Alexander Shopov [bg]
+
+40.1
+====
+* Disable welcome dialog in classic session [Florian; !169]
+* windowsNavigator: Adjust to a late gnome-shell change [Florian; !170]
+
+Contributors:
+  Florian Müllner
+
+Translators:
+  Ngọc Quân Trần [vi], Anders Jonsson [sv], Carmen Bianca BAKKER [eo],
+  Pawan Chitrakar [ne], Quentin PAGÈS [oc]
+
+40.0
+====
+
+Translators:
+  Jiri Grönroos [fi]
+
+40.rc
+=====
+* native-window-placement: Adjust to gnome-shell changes [Florian; !164]
+* windows-navigator: Adjust to gnome-shell changes [Florian; !163]
+* window-list, workspace-indicator: Only show previews for up to six workspaces
+  [Florian; !165]
+* window-list, workspace-indicator: Improve workspace preview appearance
+  [Florian; !166]
+
+Contributors:
+  Florian Müllner
+
+Translators:
+  Fran Dieguez [gl]
+
+40.beta
+=======
+* Add tooltips to workspace thumbnails [Florian; !155]
+* Drop arrows from top bar menus [Florian; !156]
+* drive-menu: Mark mounts that can be unmounted as removable [Michael; !152]
+* Remove horizontal-workspaces extension [Florian; !158]
+* Adjust to shell overview changes [Florian; !159, !160]
+* Fix crashes [Daniel; !157]
+* Misc. bug fixes and cleanups [Florian; !154, !161]
+
+Contributors:
+  Michael Lawton, Florian Müllner, Daniel van Vugt
+
+Translators:
+  Аляксей [be], A S Alam [pa]
+
+40.alpha.1
+==========
+* Don't depend on sassc when building from tarball [Florian; !150]
+* Port extensions preferences to GTK4 [Florian; !148]
+* Misc. bug fixes and cleanups [Florian, Jonas; !149, !151, !153]
+
+Contributors:
+  Jonas Dreßler, Florian Müllner
+
+40.alpha
+========
+* window-list: Honor changes in skip-taskbar property [Sergio; !130]
+* window-list, workspace-indicator: Adjust to 3.38 changes [Florian; !133]
+* window-list, workspace-indicator: Improve previews in workspace thumbs
+  [Florian; #260, !142]
+* auto-move: Improve behavior on multi-monitor setups [Florian; !135]
+* windowNavigator: Adjust to 3.38 changes [Thun; #259]
+* Misc. bug fixes and cleanups [Florian, Jonas Å, Jordan, Ray; !131, !136,
+  !137, !140, !141, !144, !146, !145]
+
+Contributors:
+  Sergio Costas, Florian Müllner, Jordan Petridis, Thun Pin, Ray Strode,
+  Jonas Ådahl
+
+Translators:
+  Fabio Tomat [fur], Jordi Mas [ca]
+
+3.38.1
+======
+
+Contributors:
+  Yacine Bouklif, Florian Müllner
+
+Translators:
+  Yacine Bouklif [kab], Cheng-Chia Tseng [zh_TW], Stas Solovey [ru],
+  Yosef Or Boczko [he]
+
+3.38.0
+======
+
+Translators:
+  Balázs Meskó [hu], Alan Mortensen [da], Juliano Camargo [pt], Tim Sabsch [de],
+  Milo Casagrande [it], Rūdolfs Mazurs [lv]
+
+3.37.92
+=======
+
+Translators:
+  Nathan Follens [nl], Zander Brown [en_GB], Aurimas Černius [lt],
+  Marek Černocký [cs], Changwoo Ryu [ko], Dušan Kazik [sk]
+
+3.37.91
+=======
+
+Contributors:
+  Florian Müllner
+
+Translators:
+  Fran Dieguez [gl], Akarshan Biswas [bn_IN], Kukuh Syafaat [id],
+  Piotr Drąg [pl], Rafael Fontenelle [pt_BR], Jiri Grönroos [fi],
+  Марко Костић [sr], Goran Vidović [hr]
+
+3.37.90
+=======
+* Misc. bug fixes and cleanups [Florian, Piotr; !126, !128]
+
+Contributors:
+  Piotr Drąg, Florian Müllner
+
+Translators:
+  Fabio Tomat [fur], Efstathios Iosifidis [el], Anders Jonsson [sv],
+  Asier Sarasua Garmendia [eu], Alexandre Franke [fr]
+
+3.37.3
+======
+* window-list, native-window-placement: Adjust to shell changes [Florian; !124]
+
+Contributors:
+  Florian Müllner
+
+Translators:
+  Jordi Mas [ca], sicklylife [ja], Boyuan Yang [zh_CN],
+  Baurzhan Muftakhidinov [kk]
+
+3.37.2
+======
+* window-list, auto-move: Modernize preference dialogs [Florian; !121]
+* Adjust to gnome-shell changes [Florian; !122]
+
+Contributors:
+  Florian Müllner
+
+Translators:
+  Cheng-Chia Tseng [zh_TW], Yuri Chornoivan [uk], Daniel Mustieles [es],
+  Emin Tufan Çetin [tr], Danial Behzadi [fa], Daniel Șerbănescu [ro],
+  Matej Urbančič [sl]
+
+3.37.1
+======
+* drive-menu: Emphasize eject buttons [Florian; #223]
+* user-theme: Add preference dialog [Florian; !117]
+* window-list: Fix inconsistent state in preference dialog [Milan; !119]
+* workspace-indicator: Overhaul preference dialog [Florian; !120]
+* user-theme: Support session mode styles [Florian; !118]
+* Misc. bug fixes and cleanups [Florian, Xiaoguang; !113, !106, !114, !116]
+
+Contributors:
+  Milan Crha, Florian Müllner, Xiaoguang Wang
+
+Translators:
+  Daniel Korostil [uk], Yosef Or Boczko [he], Kristjan SCHMIDT [eo],
+  Dz Chen [zh_CN], Danial Behzadi [fa], Yuri Chornoivan [uk],
+  Anders Jonsson [sv], Daniel Mustieles [es]
+
 3.36.0
 ======
 

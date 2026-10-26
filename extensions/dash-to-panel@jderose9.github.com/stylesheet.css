@@ -21,7 +21,8 @@
  * Some code was also adapted from the upstream Gnome Shell source code.
  */
 
-#dashtopanelTaskbar .dash-item-container > StWidget {
+#dashtopanelTaskbar .dash-item-container > StWidget,
+.dashtopanelMainPanel .show-apps {
 	margin: 0;
 	padding: 0; 
 }
@@ -86,8 +87,15 @@
 
 .dashtopanelMainPanel.vertical .panel-button > *,
 .dashtopanelMainPanel.vertical .panel-button.vertical > *,
-.dashtopanelMainPanel.vertical .panel-button.clock-display > * {
+.dashtopanelMainPanel.vertical .panel-button.vertical .system-status-icon,
+.dashtopanelMainPanel.vertical .panel-button.clock-display > *,
+.dashtopanelMainPanel.vertical .panel-button.clock-display .clock {
 	padding: 8px 0; 
+}
+
+.dashtopanelMainPanel.vertical .panel-button.clock-display {
+	-natural-hpadding: 0;
+	-minimum-hpadding: 0;
 }
 
 #dashtopanelThumbnailList {
@@ -126,9 +134,6 @@
 	background-color: rgba(55, 55, 55, .4);
 }
 
-.panel-corner.hidden:active, .panel-corner.hidden:overview, .panel-corner.hidden:focus {
-    -panel-corner-border-color: rgba(0, 0, 0, .001);
-}
 #dashtopanelScrollview .badge {
 	color: rgba(255, 255, 255, 1);
 	font-weight: bold;
