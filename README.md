@@ -1,5 +1,5 @@
 Making Ubuntu more usable for everyone.
-Ubuntu20.04-install-pack provides a clean, streamlined system that's ready for work — with nothing unnecessary and everything tailored to your needs.
+Ubuntu-install-pack provides a clean, streamlined system that's ready for work — with nothing unnecessary and everything tailored to your needs.
 It’s the perfect setup tool for GNU/Linux users who want efficiency and simplicity.
 
 Делаем GNU/Linux UBUNTU более удобным!
@@ -47,7 +47,7 @@ QT приложения не будут отличаться от системн
 
 Установка офисных программ
 
-Установка Zen-ядра на Ubuntu 20.04
+Установка Zen-ядра на Ubuntu
 
 Решение проблемы запоминания яркости Ubuntu
 
@@ -58,8 +58,8 @@ QT приложения не будут отличаться от системн
 
 ``` 
 sudo apt update && sudo apt install -y git && cd ~ &&
-git clone https://github.com/ClimbMunchkin/ubuntu20.04-install-pack.git ubuntu20.04-install-pack &&
-bash ~/ubuntu20.04-install-pack/ubuntu20.04-install-pack.sh
+git clone https://github.com/ClimbMunchkin/ubuntu-install-pack.git ubuntu-install-pack &&
+bash ~/ubuntu-install-pack/ubuntu-install-pack.sh
 ```
 
 Выберите необходимые вам пункты для установки. После установки перезагрузите компьютер.
