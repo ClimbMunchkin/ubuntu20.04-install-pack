@@ -27,6 +27,10 @@ cat ../config/dash-to-dock.conf | dconf load /org/gnome/shell/extensions/dash-to
 #Перезапускаем сеанс
 #sudo service lightdm restart
 #или так sudo service gdm3 restart
+cat desk-changer.conf.old | dconf load /org/gnome/shell/extensions/desk-changer/
+
+
+
 
 
 
