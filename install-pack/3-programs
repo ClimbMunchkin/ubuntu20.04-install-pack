@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #Обязательные программы
 echo "#УСТАНАВЛИВАЕМ ОБЯЗАТЕЛЬНЫЕ ПРОГРАММЫ..."
 sudo add-apt-repository ppa:danielrichter2007/grub-customizer

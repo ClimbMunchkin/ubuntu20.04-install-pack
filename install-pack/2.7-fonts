@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 #Обязательные программы
 echo "#УСТАНАВЛИВАЕМ ШРИФТЫ..."
-sudo apt-get update && sudo apt-get upgrade -y
-sudo apt-get install -y ttf-mscorefonts-installer cabextract
+sudo apt update
+sudo apt install -y ttf-mscorefonts-installer cabextract
 mkdir ~/.fonts
 wget -qO- http://plasmasturm.org/code/vistafonts-installer/vistafonts-installer | bash
 cp ../fonts/* ~/.fonts

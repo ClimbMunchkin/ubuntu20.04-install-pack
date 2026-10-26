@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #Исправляем проблему запоминания яркости Ubuntu
 echo "#ИСПРАВЛЯЕМ ПРОБЛЕМУ ЗАПОМИНАНИЯ ЯРКОСТИ UBUNTU..."
 sudo cp ../config/brightness/brightness.service /etc/systemd/system/

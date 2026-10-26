@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #Обновление системы до последней актуальной версии
 echo "#ОБНОВЛЕНИЕ СИСТЕМЫ ДО ПОСЛЕДНЕЙ АКТУАЛЬНОЙ ВЕРСИИ..."
-sudo apt-get update && sudo apt-get upgrade -y
+sudo apt update && sudo apt upgrade -y
