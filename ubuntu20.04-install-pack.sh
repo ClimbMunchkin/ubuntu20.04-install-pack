@@ -47,7 +47,7 @@ cd install-pack
 
 count=$(echo $progs |wc -w)
 clear
-echo "ЧИСЛО УСТАНАВЛИВАЕМЫХ КОМПОНЕНТ: $count \n"
+echo "ЧИСЛО УСТАНАВЛИВАЕМЫХ КОМПОНЕНТ: $count"
 delta=$((100/$count + 1))
 
 
